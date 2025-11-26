@@ -32,6 +32,10 @@ app.use('/api/v1/admin', adminRoute);
 // centralised error handler
 app.use(errorHandler);
 const PORT = process.env.PORT || 3000;
+
+app.get("/", (req, res) => {
+  res.send("BuySmart API is live ");
+});
 app.listen(PORT, () => {
   console.log("server is running on port ", PORT);
 });
