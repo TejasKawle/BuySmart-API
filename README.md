@@ -1,119 +1,190 @@
-# BuySmart API 
 
-**BuySmart API** is a production-ready **E-Commerce Backend** built with **Node.js, Express, and MongoDB**. It provides secure and efficient APIs for products, orders, cart, user management, and admin analytics. This project demonstrates advanced backend concepts like JWT authentication, role-based access, transactions, and aggregation pipelines.
 
----
+# ** BuySmart API – Production-Ready E-Commerce Backend**
 
-##  Features
+BuySmart API is a fully–featured **E-Commerce backend** built using **Node.js, Express, and MongoDB**.
+It implements **authentication, authorization, product management, cart, orders, payments (placeholder), admin analytics, and more**.
 
-### User Authentication & Authorization
-- Register and login with **JWT token authentication**
-- **Role-based access control**: admin vs normal user
-- Protected routes to ensure data security
-
-### Product Management
-- CRUD operations for products
-- Pagination, filtering, and sorting support
-- Admin-only routes for creating, updating, deleting products
-
-### Cart & Orders
-- Add/update/remove items in user cart
-- Place orders with **transaction-safe operations** (atomic stock reduction & cart clearing)
-- Order tracking with status (`created`, `processing`, `shipped`, `delivered`, `cancelled`)
-
-### Admin Analytics
-- Total users, orders, revenue
-- Best-selling products
-- Monthly sales chart using **MongoDB aggregation pipelines**
-
-### User Profile
-- View and update profile
-- Change password
+This project follows **real-world architecture**, uses **MVC pattern**, and includes many **advanced backend concepts** relevant for interviews.
 
 ---
 
-##  Tech Stack
-- **Backend:** Node.js, Express.js
-- **Database:** MongoDB (Mongoose)
-- **Authentication:** JWT
-- **Middleware:** Error handling, validation, role-based access
+##  **Features**
+
+###  **Authentication & Authorization**
+
+* Register & Login
+* JWT-based authentication
+* Role-based access control (Admin/User)
+* Protected routes
+
+###  **Product Management**
+
+* Create, update, delete products (Admin only)
+* Public product listing
+* Filtering, sorting, pagination
+
+###  **Cart Management**
+
+* Add to cart
+* Update cart item
+* Remove item
+* Clear cart
+
+###  **Orders**
+
+* Create order from cart
+* Reduce stock automatically
+* MongoDB **transactions** for atomic operations
+* Order history for users
+* Admin order overview
+
+###  **Admin Dashboard Analytics**
+
+Uses MongoDB **aggregation pipelines** to get:
+
+* Total revenue
+* Total users
+* Total orders
+
+###  **User Features**
+
+* Get profile
+* Update profile
+* Change password
 
 ---
 
-##  Installation
+##  **Tech Stack**
 
-1. Clone the repo:
-```bash
-git clone https://github.com/TejasKawle/BuySmart-API.git
-cd BuySmart-API
-Install dependencies:
+| Layer             | Technology                             |
+| ----------------- | -------------------------------------- |
+| Backend Framework | **Node.js + Express.js**               |
+| Database          | **MongoDB + Mongoose**                 |
+| Auth              | **JWT, bcryptjs**                      |
+| Deployment        | **Render**                             |             |
+| Other Concepts    | Transactions, Aggregations, Middleware |
 
-bash
-Copy code
-npm install
-Create a .env file based on .env.example:
 
-ini
-Copy code
+
+## **Environment Variables**
+
+Create a `.env` file:
+
+```
 PORT=5000
-MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_jwt_secret
-Start the server:
+MONGO_URI=your_mongo_db_connection_string
+JWT_SECRET=your_secret_key
+JWT_EXPIRE=7d
+```
 
-bash
-Copy code
+---
+
+##  **Run Locally**
+
+```
+npm install
 npm run dev
-Server should run on http://localhost:5000
+```
 
- API Endpoints
-Auth
-Method	Endpoint	Description
-POST	/api/v1/auth/register	Register a new user
-POST	/api/v1/auth/login	Login and get JWT token
-GET	/api/v1/auth/profile	Get logged-in user profile (protected)
+Server starts at:
 
-Products
-Method	Endpoint	Description
-GET	/api/v1/products	Get all products
-POST	/api/v1/products	Create new product (admin only)
-PUT	/api/v1/products/:id	Update product (admin only)
-DELETE	/api/v1/products/:id	Delete product (admin only)
+```
+http://localhost:5000
+```
 
-Cart
-Method	Endpoint	Description
-POST	/api/v1/cart	Add/update product in cart
-GET	/api/v1/cart	Get user cart
-DELETE	/api/v1/cart/:id	Remove product from cart
+---
 
-Orders
-Method	Endpoint	Description
-POST	/api/v1/orders	Place an order (protected)
-GET	/api/v1/orders	Get logged-in user orders
-GET	/api/v1/orders/:id	Get single order by ID
+##  **Live API URL**
 
-Admin Analytics
-Method	Endpoint	Description
-GET	/api/v1/admin/stats	Get total users, orders, revenue, best sellers (admin only)
+**[https://buysmart-api.onrender.com](https://buysmart-api.onrender.com)**
 
- Live API
-Deployed on Render: https://buysmart-api.onrender.com
+---
 
- Notes
-This is a backend-only project. You can integrate with any frontend (React, Next.js, etc.).
+##  API Endpoints
 
-All sensitive routes are protected with JWT and role-based authorization.
 
-MongoDB transactions are used to ensure order creation and stock updates are atomic.
+##  **AUTH ROUTES** → `/api/v1/auth`
 
- Future Enhancements
-Add product reviews & ratings
+| Method | Endpoint    | Access  | Description                |
+| ------ | ----------- | ------- | -------------------------- |
+| POST   | `/register` | Public  | Register a new user        |
+| POST   | `/login`    | Public  | Login user & get JWT       |
+| GET    | `/profile`  | Private | Get logged-in user profile |
+| PUT    | `/update-profile`  | Private | Update profile             |
+| PUT    | `/chnage-password` | Private | Change password            |
 
-Wishlist & favorites
+---
 
-Online payment integration (Razorpay, Stripe, PayPal)
+##  **PRODUCT ROUTES** → `/api/v1/product`
 
-Admin dashboard with detailed analytics charts
+| Method | Endpoint | Access     | Description        |
+| ------ | -------- | ---------- | ------------------ |
+| GET    | `/`      | Public     | Get all products   |
+| GET    | `/:id`   | Public     | Get single product |
+| POST   | `/`      | Admin Only | Create product     |
+| PUT    | `/:id`   | Admin Only | Update product     |
+| DELETE | `/:id`   | Admin Only | Delete product     |
 
-🔗 Author
-Tejas Kawle
-GitHub | LinkedIn
+---
+
+##  **CART ROUTES** → `/api/v1/cart`
+
+| Method | Endpoint      | Access  | Description      |
+| ------ | ------------- | ------- | ---------------- |
+| POST   | `/add/:productId`        | Private | Add item to cart |
+| GET    | `/`           | Private | View cart        |
+| PUT    | `/update/:productId`     | Private | Update quantity  |
+| DELETE | `/remove/:productId` | Private | Remove item      |
+
+---
+
+##  **ORDER ROUTES** → `/api/v1/order`
+
+| Method | Endpoint     | Access  | Description        |
+| ------ | ------------ | ------- | ------------------ |
+| POST   | `/`          | Private | Place new order    |
+| GET    | `/my` | Private | Get user's orders  |
+| GET    | `/:id`       | Private | Get specific order |
+
+---
+
+##  **ADMIN ROUTES** → `/api/v1/admin`
+
+| Method | Endpoint               | Access | Description           |
+| ------ | ---------------------- | ------ | --------------------- |
+| GET    | `/stats/revenue`       | Admin  | Total revenue         |
+| GET    | `/stats/orders`        | Admin  | Total orders          |
+| GET    | `/stats/users`         | Admin  | Total users           |
+
+---
+
+##  **Key Highlights**
+
+### ✔ Professional MVC Architecture
+
+### ✔ Protected admin-only routes
+
+### ✔ Centralized error handling
+
+### ✔ MongoDB transactions
+
+### ✔ Aggregation analytics like real e-commerce
+
+### ✔ Clean, structured, interview-ready codebase
+
+---
+
+##  **Author**
+
+**Tejas Kawle**
+BuySmart API – A complete production-style backend built step-by-step.
+
+---
+
+##  **Like this project? Consider giving it a star on GitHub!**
+
+---
+*
+
+
