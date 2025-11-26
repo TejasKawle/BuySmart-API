@@ -1,11 +1,11 @@
 
 
-# ** BuySmart API – Production-Ready E-Commerce Backend**
+#  BuySmart API – Production-Ready E-Commerce Backend
 
 BuySmart API is a fully–featured **E-Commerce backend** built using **Node.js, Express, and MongoDB**.
 It implements **authentication, authorization, product management, cart, orders, payments (placeholder), admin analytics, and more**.
 
-This project follows **real-world architecture**, uses **MVC pattern**, and includes many **advanced backend concepts** relevant for interviews.
+This project follows **real-world architecture**, uses **MVC pattern**, and includes many **advanced backend concepts*
 
 ---
 
@@ -178,7 +178,7 @@ http://localhost:5000
 ##  **Author**
 
 **Tejas Kawle**
-BuySmart API – A complete production-style backend built step-by-step.
+BuySmart API – A complete production-style backend
 
 ---
 
